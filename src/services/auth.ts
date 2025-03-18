@@ -8,7 +8,7 @@ interface User {
 }
 
 // API URL - in production, this would come from environment variables
-const API_URL = 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 // Store JWT token in localStorage
 const TOKEN_KEY = 'auth_token';
@@ -24,10 +24,15 @@ const authFetch = async (endpoint: string, options: RequestInit = {}) => {
     ...options.headers
   };
 
-  return fetch(`${API_URL}${endpoint}`, {
-    ...options,
-    headers
-  });
+  try {
+    return await fetch(`${API_URL}${endpoint}`, {
+      ...options,
+      headers
+    });
+  } catch (error) {
+    console.error(`API request error for ${endpoint}:`, error);
+    throw error;
+  }
 };
 
 export async function login(email: string, password: string): Promise<User> {
@@ -131,16 +136,38 @@ export async function getAllUsers(): Promise<User[]> {
 }
 
 export async function getUser(userId: string): Promise<User | null> {
+  if (!userId) {
+    console.error('getUser called with no userId');
+    return null;
+  }
+  
   try {
+    // Add console logs to track the request
+    console.log(`Fetching user with ID: ${userId}`);
+    console.log(`API URL: ${API_URL}/auth/users/${userId}`);
+    
     const response = await fetch(`${API_URL}/auth/users/${userId}`);
     
     if (!response.ok) {
-      throw new Error('Failed to fetch user');
+      const errorData = await response.json().catch(() => ({}));
+      console.error('User fetch error response:', errorData);
+      throw new Error(`Failed to fetch user: ${errorData.msg || response.statusText}`);
     }
     
-    return await response.json();
+    const userData = await response.json();
+    console.log('User data received:', userData);
+    return userData;
   } catch (error) {
     console.error('Get user error:', error);
-    return null;
+    // Return a mock user for development if real API is unavailable
+    if (import.meta.env.DEV && (!API_URL.includes('localhost') || !window.navigator.onLine)) {
+      console.log('Using mock user data for development');
+      return {
+        id: userId,
+        name: 'Demo User',
+        email: 'demo@example.com'
+      };
+    }
+    throw error;
   }
 }

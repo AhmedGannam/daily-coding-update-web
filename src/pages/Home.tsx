@@ -6,21 +6,26 @@ import { ReportCard } from '@/components/reports/ReportCard';
 import { AddReportButton } from '@/components/reports/AddReportButton';
 import { getUserReports, Report } from '@/services/reports';
 import { motion } from 'framer-motion';
+import { AlertCircle } from 'lucide-react';
 
 export function Home() {
   const { user } = useAuth();
   const [reports, setReports] = useState<Report[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
   const fetchReports = async () => {
     if (!user) return;
     
     setIsLoading(true);
+    setError(null);
+    
     try {
       const userReports = await getUserReports(user.id);
       setReports(userReports);
     } catch (error) {
       console.error('Failed to fetch reports:', error);
+      setError('Could not load your reports. Please try again later.');
     } finally {
       setIsLoading(false);
     }
@@ -32,7 +37,7 @@ export function Home() {
   
   return (
     <MainLayout>
-      <div className="max-w-6xl mx-auto px-4 pt-8 pb-20">
+      <div className="container max-w-6xl mx-auto px-4 pt-8 pb-20">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -63,6 +68,19 @@ export function Home() {
               <div className="text-xl font-display">Loading reports...</div>
             </motion.div>
           </div>
+        ) : error ? (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-center py-16 max-w-md mx-auto bg-white/50 backdrop-blur-sm rounded-lg shadow-sm"
+          >
+            <AlertCircle className="h-12 w-12 text-destructive mx-auto mb-4" />
+            <h3 className="text-xl font-medium mb-2">Error</h3>
+            <p className="text-muted-foreground mb-6">
+              {error}
+            </p>
+          </motion.div>
         ) : reports.length === 0 ? (
           <motion.div 
             initial={{ opacity: 0 }}

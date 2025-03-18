@@ -1,69 +1,109 @@
-# Welcome to your Lovable project
 
-## Project info
+# MemberTrackr
 
-**URL**: https://lovable.dev/projects/c435cd8c-dc37-4425-b00d-fdd0826a5b8d
+A web application for tracking member reports, built with React, TypeScript, Tailwind CSS, and MongoDB.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- User authentication (login/register)
+- Member management
+- Report creation and editing
+- Member report viewing
+- Responsive design
+- Modern UI with animations
 
-**Use Lovable**
+## Technology Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c435cd8c-dc37-4425-b00d-fdd0826a5b8d) and start prompting.
+- **Frontend**: React, TypeScript, Tailwind CSS, Framer Motion
+- **Backend**: Node.js, Express
+- **Database**: MongoDB
+- **Authentication**: JWT
 
-Changes made via Lovable will be committed automatically to this repo.
+## Getting Started
 
-**Use your preferred IDE**
+### Prerequisites
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Node.js (v14+)
+- MongoDB (local or Atlas cluster)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Installation
 
-Follow these steps:
+1. Clone the repository:
+   ```
+   git clone <repository-url>
+   cd membertrackr
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+2. Install dependencies for both frontend and backend:
+   ```
+   # Install frontend dependencies
+   npm install
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+   # Install backend dependencies
+   cd server
+   npm install
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+3. Create environment files:
+   - Create `.env` in the root directory (copy from `.env.example`)
+   - Create `.env` in the server directory with:
+     ```
+     MONGO_URI=your_mongodb_connection_string
+     JWT_SECRET=your_jwt_secret
+     PORT=5000
+     ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+4. Start the development servers:
+   ```
+   # Start backend server
+   cd server
+   npm start
+
+   # In a separate terminal, start frontend server
+   cd ..
+   npm run dev
+   ```
+
+5. Access the application at `http://localhost:5173`
+
+## Deployment
+
+### Backend Deployment
+
+1. Deploy the backend to a service like Render, Vercel, Railway, or Heroku
+2. Ensure MongoDB Atlas is set up for production
+3. Configure environment variables on the hosting platform
+
+### Frontend Deployment
+
+1. Build the frontend:
+   ```
+   npm run build
+   ```
+2. Deploy the `dist` directory to a service like Vercel, Netlify, or GitHub Pages
+3. Configure the `VITE_API_URL` to point to your deployed backend API
+
+## Project Structure
+
+```
+├── public/                 # Static assets
+├── server/                 # Backend code
+│   ├── config/             # Database configuration
+│   ├── controllers/        # API controllers
+│   ├── middleware/         # Express middleware
+│   ├── models/             # MongoDB models
+│   ├── routes/             # API routes
+│   └── server.js           # Main server file
+├── src/                    # Frontend code
+│   ├── components/         # React components
+│   ├── contexts/           # React contexts
+│   ├── hooks/              # Custom React hooks
+│   ├── pages/              # Page components
+│   ├── services/           # API service functions
+│   └── main.tsx            # Main entry point
+└── package.json            # Dependencies and scripts
 ```
 
-**Edit a file directly in GitHub**
+## License
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/c435cd8c-dc37-4425-b00d-fdd0826a5b8d) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+[MIT License](LICENSE)

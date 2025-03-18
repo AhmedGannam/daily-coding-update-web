@@ -1,4 +1,3 @@
-
 // Real implementation of reports service using our API
 
 export interface Report {
@@ -10,7 +9,7 @@ export interface Report {
 }
 
 // API URL - in production, this would come from environment variables
-const API_URL = 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 // Helper function for making authenticated requests
 const authFetch = async (endpoint: string, options: RequestInit = {}) => {

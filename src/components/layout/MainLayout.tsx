@@ -13,7 +13,7 @@ export function MainLayout({ children }: MainLayoutProps) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
         <motion.div
           animate={{ 
             scale: [1, 1.2, 1],
@@ -24,8 +24,9 @@ export function MainLayout({ children }: MainLayoutProps) {
             repeat: Infinity,
             ease: "easeInOut" 
           }}
+          className="p-8 rounded-lg bg-white/80 backdrop-blur-sm shadow-md"
         >
-          <div className="text-2xl font-display">Loading...</div>
+          <div className="text-2xl font-display text-center">Loading...</div>
         </motion.div>
       </div>
     );
@@ -40,16 +41,18 @@ export function MainLayout({ children }: MainLayoutProps) {
   }
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       <Sidebar />
       
       <motion.main 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.4 }}
-        className="flex-1 lg:pl-56 pt-16 lg:pt-4 pb-10 px-4 md:px-8"
+        className="flex-1 lg:pl-64 pt-20 lg:pt-10 pb-10 w-full"
       >
-        {children}
+        <div className="container mx-auto">
+          {children}
+        </div>
       </motion.main>
     </div>
   );
