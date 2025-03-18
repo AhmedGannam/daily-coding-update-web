@@ -7,6 +7,14 @@ interface User {
   email: string;
 }
 
+interface RawUser {
+  _id: string;
+  name: string;
+  email: string;
+  // include any other properties returned by your API if needed
+}
+
+
 // API URL - in production, this would come from environment variables
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -128,7 +136,13 @@ export async function getAllUsers(): Promise<User[]> {
       throw new Error('Failed to fetch users');
     }
     
-    return await response.json();
+    const users = await response.json();
+    // Map _id to id for easier usage on the frontend
+    return users.map((user: RawUser ) => ({
+      ...user,
+      id: user._id
+    }));
+    
   } catch (error) {
     console.error('Get all users error:', error);
     return [];

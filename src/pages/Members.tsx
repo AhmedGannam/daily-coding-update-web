@@ -83,7 +83,7 @@ export function Members() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {members.map((member, index) => (
-              <MemberCard key={member.id} id={member.id} name={member.name} index={index} />
+              <MemberCard key={member._id} id={member._id} name={member.name} index={index} />
             ))}
           </div>
         )}
