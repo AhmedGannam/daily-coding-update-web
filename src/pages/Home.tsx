@@ -32,17 +32,17 @@ export function Home() {
   
   return (
     <MainLayout>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto px-4 pt-8 pb-20">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-8"
+          className="mb-10 text-center"
         >
-          <h1 className="text-3xl sm:text-4xl font-display font-bold">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-3">
             Welcome, {user?.name}
           </h1>
-          <p className="text-muted-foreground mt-2">
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             View and manage your daily reports
           </p>
         </motion.div>
@@ -60,7 +60,7 @@ export function Home() {
                 ease: "easeInOut" 
               }}
             >
-              <div className="text-lg font-display">Loading reports...</div>
+              <div className="text-xl font-display">Loading reports...</div>
             </motion.div>
           </div>
         ) : reports.length === 0 ? (
@@ -68,10 +68,10 @@ export function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-center py-16"
+            className="text-center py-16 max-w-md mx-auto bg-white/50 backdrop-blur-sm rounded-lg shadow-sm"
           >
-            <h3 className="text-xl font-medium mb-2">No reports yet</h3>
-            <p className="text-muted-foreground mb-6">
+            <h3 className="text-2xl font-medium mb-3">No reports yet</h3>
+            <p className="text-muted-foreground mb-8 px-6">
               Create your first daily report by clicking the + button
             </p>
             <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center animate-pulse">
@@ -79,7 +79,7 @@ export function Home() {
             </div>
           </motion.div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {reports.map((report, index) => (
               <ReportCard key={report.id} report={report} index={index} />
             ))}

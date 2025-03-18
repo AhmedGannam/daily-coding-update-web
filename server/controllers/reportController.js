@@ -1,9 +1,10 @@
+
 // server/controllers/reportController.js
-const Report = require('../models/Report');
-const User = require('../models/User');
+import Report from '../models/Report.js';
+import User from '../models/User.js';
 
 // Get all reports for a user
-exports.getUserReports = async (req, res) => {
+export const getUserReports = async (req, res) => {
   try {
     const reports = await Report.find({ userId: req.params.userId }).sort({ day: 1 });
     res.json(reports);
@@ -14,7 +15,7 @@ exports.getUserReports = async (req, res) => {
 };
 
 // Create a new report
-exports.createReport = async (req, res) => {
+export const createReport = async (req, res) => {
   const { userId, date } = req.body;
 
   try {
@@ -46,7 +47,7 @@ exports.createReport = async (req, res) => {
 };
 
 // Update a report
-exports.updateReport = async (req, res) => {
+export const updateReport = async (req, res) => {
   const { content } = req.body;
 
   try {
@@ -74,7 +75,7 @@ exports.updateReport = async (req, res) => {
 };
 
 // Get a report by ID
-exports.getReportById = async (req, res) => {
+export const getReportById = async (req, res) => {
   try {
     const report = await Report.findById(req.params.id);
     if (!report) {

@@ -1,8 +1,12 @@
+
 // server/server.js
-const express = require('express');
-const cors = require('cors');
-const connectDB = require('./config/db');
-require('dotenv').config();
+import express from 'express';
+import cors from 'cors';
+import { config } from 'dotenv';
+import connectDB from './config/db.js';
+
+// Load environment variables
+config();
 
 // Connect to database
 connectDB();
@@ -14,8 +18,8 @@ app.use(express.json({ extended: false }));
 app.use(cors());
 
 // Define routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/reports', require('./routes/reports'));
+app.use('/api/auth', (await import('./routes/auth.js')).default);
+app.use('/api/reports', (await import('./routes/reports.js')).default);
 
 const PORT = process.env.PORT || 5000;
 

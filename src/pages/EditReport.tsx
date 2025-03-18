@@ -102,9 +102,9 @@ export function EditReport() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
-        className="max-w-3xl mx-auto"
+        className="max-w-3xl mx-auto px-4 pt-8 pb-16"
       >
-        <div className="mb-6 flex items-center">
+        <div className="mb-8 flex items-center">
           <Button
             variant="ghost"
             size="icon"
@@ -143,31 +143,32 @@ export function EditReport() {
             </motion.div>
           </div>
         ) : report ? (
-          <Card className={`border-none shadow-md ${report ? getReportCardColor(report.day) : ''}`}>
-            <CardHeader>
-              <CardTitle className="text-white text-2xl">
+          <Card className={`border-none shadow-lg ${report ? getReportCardColor(report.day) : ''}`}>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-white text-2xl drop-shadow-md">
                 Day {report.day}
               </CardTitle>
             </CardHeader>
-            <CardContent className="bg-white rounded-b-lg">
+            <CardContent className="bg-white/90 backdrop-blur-sm rounded-b-lg p-6">
               <Textarea
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="Write your daily report here..."
-                className="min-h-[200px] resize-none border-none focus-visible:ring-0 shadow-inner"
+                className="min-h-[300px] resize-none border-none focus-visible:ring-1 shadow-inner p-6 text-lg"
               />
               
-              <div className="flex justify-end mt-4">
+              <div className="flex justify-end mt-6">
                 <Button
                   onClick={handleSave}
                   disabled={isSaving}
-                  className="bg-primary hover:bg-primary/80"
+                  className="bg-primary hover:bg-primary/80 px-6"
+                  size="lg"
                 >
                   {isSaving ? (
                     'Saving...'
                   ) : (
                     <>
-                      <Save className="mr-2 h-4 w-4" />
+                      <Save className="mr-2 h-5 w-5" />
                       Save Report
                     </>
                   )}
@@ -176,7 +177,7 @@ export function EditReport() {
             </CardContent>
           </Card>
         ) : (
-          <div className="text-center py-16">
+          <div className="text-center py-16 bg-white/50 backdrop-blur-sm rounded-lg shadow-sm">
             <h3 className="text-xl font-medium mb-2">Report not found</h3>
             <p className="text-muted-foreground mb-6">
               The report you're looking for doesn't exist or has been removed.
