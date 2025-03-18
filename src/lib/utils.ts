@@ -24,14 +24,15 @@ export function delay(ms: number) {
 // Get a background color for a report card based on day number
 export function getReportCardColor(day: number) {
   const colors = [
-    'bg-card-lavender', // day 1
-    'bg-card-gold',     // day 2
-    'bg-card-coral',    // day 3
-    'bg-card-coral',    // day 4
-    'bg-card-blue',     // day 5
-    'bg-card-cream'     // day 6
+    'bg-gradient-to-br from-indigo-400 to-purple-500', // day 1
+    'bg-gradient-to-br from-yellow-400 to-orange-500', // day 2
+    'bg-gradient-to-br from-red-400 to-pink-500',      // day 3
+    'bg-gradient-to-br from-green-400 to-teal-500',    // day 4
+    'bg-gradient-to-br from-blue-400 to-cyan-500',     // day 5
+    'bg-gradient-to-br from-violet-400 to-fuchsia-500' // day 6
   ];
   
   // Cycle through colors if day number exceeds available colors
   return colors[(day - 1) % colors.length];
 }
+

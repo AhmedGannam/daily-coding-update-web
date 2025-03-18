@@ -12,6 +12,7 @@ import Members from "@/pages/Members";
 import StudyMaterial from "@/pages/StudyMaterial";
 import About from "@/pages/About";
 import EditReport from "@/pages/EditReport";
+import ViewReport from "@/pages/ViewReport";
 import MemberReports from "@/pages/MemberReports";
 import NotFound from "@/pages/NotFound";
 
@@ -34,6 +35,7 @@ const App = () => (
               <Route path="/study-material" element={<StudyMaterial />} />
               <Route path="/about" element={<About />} />
               <Route path="/edit-report/:id" element={<EditReport />} />
+              <Route path="/view-report/:id" element={<ViewReport />} />
               <Route path="/member-reports/:id" element={<MemberReports />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

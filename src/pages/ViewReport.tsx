@@ -4,22 +4,17 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
-import { ArrowLeft, Save } from 'lucide-react';
-import { getReport, updateReport } from '@/services/reports';
+import { ArrowLeft } from 'lucide-react';
+import { getReport } from '@/services/reports';
 import { formatDate, getReportCardColor } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/contexts/AuthContext';
 import { motion } from 'framer-motion';
 
-export function EditReport() {
+export function ViewReport() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
-  const [isSaving, setIsSaving] = useState(false);
-  const [isAuthorized, setIsAuthorized] = useState(false);
   const [report, setReport] = useState<{
     id: string;
     date: string;
@@ -27,30 +22,15 @@ export function EditReport() {
     content?: string;
     userId: string;
   } | null>(null);
-  const [content, setContent] = useState('');
   
   useEffect(() => {
     const fetchReport = async () => {
-      if (!id || !user) return;
+      if (!id) return;
       
       try {
         const reportData = await getReport(id);
         if (reportData) {
           setReport(reportData);
-          setContent(reportData.content || '');
-          
-          // Check if current user is the owner of this report
-          if (reportData.userId === user.id) {
-            setIsAuthorized(true);
-          } else {
-            // If not authorized, show toast and redirect to view page
-            toast({
-              title: "Access Denied",
-              description: "You can only edit your own reports.",
-              variant: "destructive",
-            });
-            navigate(`/view-report/${id}`);
-          }
         }
       } catch (error) {
         console.error('Failed to fetch report:', error);
@@ -65,36 +45,7 @@ export function EditReport() {
     };
     
     fetchReport();
-  }, [id, user, toast, navigate]);
-  
-  const handleSave = async () => {
-    if (!id || !report || !isAuthorized) return;
-    
-    setIsSaving(true);
-    try {
-      await updateReport(id, content);
-      toast({
-        title: "Success",
-        description: "Your report has been saved.",
-      });
-      
-      // Navigate back after successful save
-      navigate('/');
-    } catch (error) {
-      console.error('Failed to save report:', error);
-      toast({
-        title: "Error",
-        description: "Failed to save your report.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSaving(false);
-    }
-  };
-  
-  if (!isAuthorized && !isLoading) {
-    return null; // This prevents any flickering before redirect
-  }
+  }, [id, toast]);
   
   return (
     <MainLayout>
@@ -116,7 +67,7 @@ export function EditReport() {
           
           <div>
             <h1 className="text-3xl font-display font-bold">
-              Edit Report
+              View Report
             </h1>
             {report && (
               <p className="text-muted-foreground">
@@ -150,28 +101,8 @@ export function EditReport() {
               </CardTitle>
             </CardHeader>
             <CardContent className="bg-white rounded-b-lg">
-              <Textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Write your daily report here..."
-                className="min-h-[200px] resize-none border-none focus-visible:ring-0 shadow-inner"
-              />
-              
-              <div className="flex justify-end mt-4">
-                <Button
-                  onClick={handleSave}
-                  disabled={isSaving}
-                  className="bg-primary hover:bg-primary/80"
-                >
-                  {isSaving ? (
-                    'Saving...'
-                  ) : (
-                    <>
-                      <Save className="mr-2 h-4 w-4" />
-                      Save Report
-                    </>
-                  )}
-                </Button>
+              <div className="min-h-[200px] bg-gray-50 rounded-md p-4 shadow-inner break-words whitespace-pre-wrap">
+                {report.content || "No content for this report yet."}
               </div>
             </CardContent>
           </Card>
@@ -191,4 +122,4 @@ export function EditReport() {
   );
 }
 
-export default EditReport;
+export default ViewReport;
