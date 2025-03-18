@@ -1,8 +1,8 @@
 // server/routes/reports.js
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const reportController = require('../controllers/reportController');
-const auth = require('../middleware/auth');
+import * as reportController from '../controllers/reportController.js'; // Assuming reportController exports are named
+import auth from '../middleware/auth.js';
 
 // @route   GET api/reports/user/:userId
 // @desc    Get all reports for a user
@@ -24,4 +24,4 @@ router.put('/:id', auth, reportController.updateReport);
 // @access  Public
 router.get('/:id', reportController.getReportById);
 
-module.exports = router;
+export default router;

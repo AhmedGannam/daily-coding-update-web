@@ -1,8 +1,8 @@
 // server/routes/auth.js
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const authController = require('../controllers/authController');
-const auth = require('../middleware/auth');
+import * as authController from '../controllers/authController.js'; // Assuming authController exports are named
+import auth from '../middleware/auth.js';
 
 // @route   POST api/auth/register
 // @desc    Register user & get token
@@ -29,4 +29,4 @@ router.get('/users', authController.getAllUsers);
 // @access  Public
 router.get('/users/:id', authController.getUserById);
 
-module.exports = router;
+export default router;
