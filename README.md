@@ -10,7 +10,6 @@ A web application for tracking member reports, built with React, TypeScript, Tai
 - Report creation and editing
 - Member report viewing
 - Responsive design
-- Modern UI with animations
 
 ## Technology Stack
 
@@ -31,7 +30,7 @@ A web application for tracking member reports, built with React, TypeScript, Tai
 1. Clone the repository:
    ```
    git clone <repository-url>
-   cd membertrackr
+   cd frontend
    ```
 
 2. Install dependencies for both frontend and backend:
@@ -45,7 +44,7 @@ A web application for tracking member reports, built with React, TypeScript, Tai
    ```
 
 3. Create environment files:
-   - Create `.env` in the root directory (copy from `.env.example`)
+   - Create `.env` in the root directory 
    - Create `.env` in the server directory with:
      ```
      MONGO_URI=your_mongodb_connection_string
@@ -64,7 +63,6 @@ A web application for tracking member reports, built with React, TypeScript, Tai
    npm run dev
    ```
 
-5. Access the application at `http://localhost:5173`
 
 ## Deployment
 
@@ -94,7 +92,7 @@ A web application for tracking member reports, built with React, TypeScript, Tai
 │   ├── models/             # MongoDB models
 │   ├── routes/             # API routes
 │   └── server.js           # Main server file
-├── src/                    # Frontend code
+├── frontend/                    # Frontend code
 │   ├── components/         # React components
 │   ├── contexts/           # React contexts
 │   ├── hooks/              # Custom React hooks
