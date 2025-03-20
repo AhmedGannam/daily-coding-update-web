@@ -110,10 +110,21 @@ export function ViewReport() {
           </div>
         ) : report ? (
           <Card className={`border-none shadow-lg ${report ? getReportCardColor(report.day) : ''}`}>
-            <CardHeader className="pb-3">
+            <CardHeader className="pb-3 flex flex-row justify-between items-center">
               <CardTitle className="text-white text-2xl drop-shadow-md">
                 Day {report.day}
               </CardTitle>
+              {user?.id === report.userId && (
+                <Button 
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => navigate(`/edit-report/${report.id}`)}
+                  className="text-white/80 hover:text-white"
+                >
+                  <Edit className="h-4 w-4 mr-2" />
+                  Edit Number
+                </Button>
+              )}
             </CardHeader>
             <CardContent className="bg-white/90 backdrop-blur-sm rounded-b-lg p-6">
               <div className="min-h-[300px] bg-gray-50 rounded-md p-6 shadow-inner break-words whitespace-pre-wrap text-lg">

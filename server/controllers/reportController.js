@@ -48,27 +48,36 @@ export const createReport = async (req, res) => {
 
 // Update a report
 export const updateReport = async (req, res) => {
-  const { content } = req.body;
+  const { content, day } = req.body;
 
   try {
-    let report = await Report.findById(req.params.id);
+    const report = await Report.findById(req.params.id);
     if (!report) {
       return res.status(404).json({ msg: 'Report not found' });
     }
 
-    // Check if user owns this report
+    // Check ownership
     if (report.userId.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'Not authorized' });
     }
 
-    // Update report
-    report.content = content;
+    // Convert day to number and validate
+    const dayNumber = Number(day);
+    if (isNaN(dayNumber) || dayNumber < 1) {
+      return res.status(400).json({ msg: 'Invalid day number' });
+    }
+
+    // Update fields
+    report.content = content || ''; // Handle empty content
+    report.day = dayNumber;
+    
     await report.save();
     res.json(report);
+    
   } catch (err) {
     console.error(err.message);
-    if (err.kind === 'ObjectId') {
-      return res.status(404).json({ msg: 'Report not found' });
+    if (err.name === 'CastError') {
+      return res.status(400).json({ msg: 'Invalid report ID' });
     }
     res.status(500).send('Server error');
   }

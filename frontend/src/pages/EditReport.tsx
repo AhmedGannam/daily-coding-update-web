@@ -11,6 +11,7 @@ import { formatDate, getReportCardColor } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { motion } from 'framer-motion';
+import { Input } from '@/components/ui/input';
 
 export function EditReport() {
   const { id } = useParams<{ id: string }>();
@@ -72,7 +73,7 @@ export function EditReport() {
     
     setIsSaving(true);
     try {
-      await updateReport(id, content);
+      await updateReport(id, content, report.day);
       toast({
         title: "Success",
         description: "Your report has been saved.",
@@ -150,12 +151,29 @@ export function EditReport() {
               </CardTitle>
             </CardHeader>
             <CardContent className="bg-white/90 backdrop-blur-sm rounded-b-lg p-6">
-              <Textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Write your daily report here..."
-                className="min-h-[300px] resize-none border-none focus-visible:ring-1 shadow-inner p-6 text-lg"
-              />
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-2" htmlFor="dayNumber">
+                    Day Number
+                  </label>
+                  <Input
+                    id="dayNumber"
+                    type="number"
+                    value={report.day}
+                    onChange={(e) => setReport(prev => prev ? ({
+                      ...prev,
+                      day: Number(e.target.value)
+                    }) : prev)}
+                    min="1"
+                    className="w-32"
+                  />
+                </div>
+
+                <Textarea
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  placeholder="Write your daily report here..."
+                  className="min-h-[300px] resize-none border-none focus-visible:ring-1 shadow-inner p-6 text-lg"
+                />
               
               <div className="flex justify-end mt-6">
                 <Button

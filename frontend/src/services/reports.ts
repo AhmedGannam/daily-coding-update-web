@@ -78,11 +78,11 @@ export async function createReport(userId: string, date: string): Promise<Report
   }
 }
 
-export async function updateReport(reportId: string, content: string): Promise<Report> {
+export async function updateReport(reportId: string, content: string, day: number): Promise<Report> {
   try {
     const response = await authFetch(`/reports/${reportId}`, {
       method: 'PUT',
-      body: JSON.stringify({ content })
+      body: JSON.stringify({ content, day })
     });
     
     if (!response.ok) {

@@ -47,9 +47,15 @@ export function ReportCard({ report, index }: ReportCardProps) {
           </div>
           
           <div className="flex flex-col items-center justify-center h-full">
-            <h2 className="text-5xl font-display font-bold text-white drop-shadow-sm mb-4">
-              Day {day}
-            </h2>
+          <h2 className="text-5xl font-display font-bold text-white drop-shadow-sm mb-4">
+              {isOwner ? (
+                <Link to={`/edit-report/${id}`}>
+                  Day {day}
+                </Link>
+              ) : (
+                <>Day {day}</>
+              )}
+          </h2>
             <div className="bg-white/70 p-2 rounded-md w-4/5 text-center text-sm line-clamp-2">
               {contentPreview}
             </div>
