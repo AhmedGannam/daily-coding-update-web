@@ -56,7 +56,7 @@ A web application for tracking member reports, built with React, TypeScript, Tai
    ```
    # Start backend server
    cd server
-   npm start
+   node server.js
 
    # In a separate terminal, start frontend server
    cd ..
